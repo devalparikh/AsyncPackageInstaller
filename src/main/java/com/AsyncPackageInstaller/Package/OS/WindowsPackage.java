@@ -1,6 +1,6 @@
-package com.AsyncPackageInstaller.Package;
+package com.AsyncPackageInstaller.Package.OS;
 
-import com.AsyncPackageInstaller.Constants.ErrorMessages;
+import com.AsyncPackageInstaller.Package.Package;
 
 import java.util.List;
 
@@ -25,6 +25,7 @@ public class WindowsPackage extends Package {
 
   @Override
   public void install() {
+    // OS-level install API
     System.out.println("Installing Windows Package " + this.name);
   }
 }

@@ -1,9 +1,9 @@
 package com.AsyncPackageInstaller.Installer;
 
 import com.AsyncPackageInstaller.Constants.ErrorMessages;
-import com.AsyncPackageInstaller.Package.MacPackage;
+import com.AsyncPackageInstaller.Package.OS.MacPackage;
 import com.AsyncPackageInstaller.Package.Package;
-import com.AsyncPackageInstaller.Package.WindowsPackage;
+import com.AsyncPackageInstaller.Package.OS.WindowsPackage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,9 +14,9 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 
 public class InstallerTest {
 
@@ -28,7 +28,7 @@ public class InstallerTest {
   Package macPackageDependency2 = new MacPackage(List.of(macPackageDependency1));
   Package macPackageDependency3 = new MacPackage(List.of(macPackageDependency1));
   Package macPackage = new MacPackage(List.of(macPackageDependency2, macPackageDependency3));
-  int numberOfPackages = 4;
+  final int numberOfPackages = 4;
 
   @BeforeEach
   public void setup() {
@@ -47,23 +47,23 @@ public class InstallerTest {
 
   @Test
   public void testService() {
+    Mockito.doNothing().when(mock(MacPackage.class)).install();
+    InstallerService installerService = new InstallerService();
 
     Package macPackageDependency1 = new MacPackage();
-    System.out.println("mac package 1: " + macPackageDependency1);
-
     Package macPackageDependency2 = new MacPackage(List.of(macPackageDependency1));
-    System.out.println("mac package 2: " + macPackageDependency2);
     Package macPackageDependency3 = new MacPackage(List.of(macPackageDependency1));
-    System.out.println("mac package 3: " + macPackageDependency3);
-
     Package macPackage = new MacPackage(List.of(macPackageDependency2, macPackageDependency3));
-    System.out.println("mac package: " + macPackage);
+    int actualPackageCount = 4;
+
+    List<Package> packages = installerService.install(macPackage);
+    assertEquals(actualPackageCount, packages.size());
   }
 
   @Test
   public void testController() {
     List<Package> allPackagesInstalled = installerController.install();
-    assertTrue(numberOfPackages == allPackagesInstalled.size());
+    assertEquals(numberOfPackages, allPackagesInstalled.size());
   }
 
   @Test

@@ -1,6 +1,7 @@
-package com.AsyncPackageInstaller.Package;
+package com.AsyncPackageInstaller.Package.OS;
 
 import com.AsyncPackageInstaller.Constants.ErrorMessages;
+import com.AsyncPackageInstaller.Package.Package;
 
 import java.util.List;
 

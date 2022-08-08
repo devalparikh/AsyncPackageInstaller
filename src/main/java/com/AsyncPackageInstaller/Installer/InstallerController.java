@@ -1,11 +1,10 @@
 package com.AsyncPackageInstaller.Installer;
 
-import com.AsyncPackageInstaller.Package.MacPackage;
+import com.AsyncPackageInstaller.Package.OS.MacPackage;
 import com.AsyncPackageInstaller.Package.Package;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 // API Layer
@@ -23,12 +22,14 @@ public class InstallerController {
 
     @PostMapping("/install")
     public List<Package> install() {
+        // Example of a mac package - pytorch
         Package brew = new MacPackage("brew");
         Package anacondas = new MacPackage("anacondas");
         Package pip = new MacPackage("pip");
         Package cython = new MacPackage("cython");
         Package python = new MacPackage("python", List.of(brew, anacondas, pip, cython));
         Package pytorch = new MacPackage("pytorch", List.of(python));
+
         return installerService.install(pytorch);
     }
 

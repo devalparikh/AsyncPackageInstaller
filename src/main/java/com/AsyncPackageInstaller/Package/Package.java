@@ -29,6 +29,7 @@ public abstract class Package {
   }
 
   public void install() {
+    // OS-level install API
     System.out.println("Installing package " + this.name);
   }
 }
